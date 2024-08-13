@@ -10,6 +10,7 @@ const initialDemoWelcomeModalData = {
 const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
   const focusInputRef = useRef(null);
   const [formState, setFormState] = useState(initialDemoWelcomeModalData);
+  const [pageState, setPageState] = useState(1);
 
   useEffect(() => {
     if (isOpen && focusInputRef.current) {
@@ -19,13 +20,18 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormState((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormState((prevFormData) => ({
+  //     ...prevFormData,
+  //     [name]: value,
+  //   }));
+  // };
+
+  function handleClick() {
+    setValue((pageState) => pageState + 1);
+    e.stopPropagation()
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,7 +41,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
 
   return (
     <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}> */}
         
       {/* <!--Welcome Modal Page 1--> */}
 
@@ -49,7 +55,8 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
             <p>KnowNative can help you read and study texts written in Mandarin Chinese.</p>
             <p>We'll help you choose a <span className="bolded">sample text</span> for this demo based on your language level. In the full version of KnowNative, you can use any text you like.</p>
             <div className="button-div">
-                <button className="dialog-two next" autofocus>Next</button>
+                <button className="dialog-two next" onClick={handleClick}>Next</button>
+                {pageState}
             </div>
         </div>
 
@@ -113,7 +120,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
                 <button className="dialog-two-from-three back" autofocus>Back</button>
             </div>
         </div>
-      </form>
+      {/* </form> */}
     </Modal>
   );
 };
