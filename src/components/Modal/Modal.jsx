@@ -12,13 +12,11 @@ const Modal = ({ isOpen, hasCloseBtn = true, onClose, children }) => {
     setModalOpen(false);
   };
 
-  //Welcome modal can only be closed by clicking submit//
-  
-  // const handleKeyDown = (event) => {
-  //   if (event.key === 'Escape') {
-  //     handleCloseModal();
-  //   }
-  // };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      handleCloseModal();
+    }
+  };
 
   useEffect(() => {
     setModalOpen(isOpen);
@@ -37,7 +35,7 @@ const Modal = ({ isOpen, hasCloseBtn = true, onClose, children }) => {
   }, [isModalOpen]);
 
   return (
-    <dialog ref={modalRef} onKeyDown={null} className="modal">
+    <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
       {hasCloseBtn && (
         <button className="modal-close-btn" onClick={handleCloseModal}>
           Close
