@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './DemoWelcomeModal.css';
 import Modal from '../Modal/Modal';
 
+const [pageCount, setPageCount] = useState(1)
+
 const initialDemoWelcomeModalData = {
   email: '',
   digestType: 'weekly',
@@ -33,14 +35,9 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
     setFormState(initialDemoWelcomeModalData);
   };
 
-  // Playground Code
-  const [pageCount, setPageCount] = useState(1)
-  // Playground Code
-
   return (
     <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose}>
       
-      {/* Playground */}
       {pageCount === 1 ? 
         <div className="dialog-padding page-one">
             <div className="progress-div">
@@ -117,16 +114,27 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
         </div> 
       : ""}
       
-
-      {pageCount}
-
-      {/* Playground */}
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <button type="submit">Submit</button>
+      {pageCount === 3 ? 
+        <div class="dialog-padding page-three">
+          <div class="progress-div">
+              <div class="progress-dashes active"></div>
+              <div class="progress-dashes active"></div>
+              <div class="progress-dashes active"></div>
+          </div>
+          <h1>Great!</h1>
+          <p>Let's get started with a <span id="textChoice" class="bolded">beginner</span>-level text.</p>
+          <p>You can choose a different text at any time using the Library icon in the left toolbar.</p>
+          <div class="button-div">
+              <button class="exit next" onClick={handleSubmit}>Let's go!</button>
+              <button 
+              className="dialog-three back" 
+              onClick={() => setPageCount((pageCount) => pageCount - 1)}
+              >
+                Back {pageCount}
+            </button>
+          </div>
         </div>
-      </form>
+      : ""}
     </Modal>
   );
 };
