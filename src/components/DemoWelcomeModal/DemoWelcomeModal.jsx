@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './DemoWelcomeModal.css';
 import Modal from '../Modal/Modal';
 
-const [pageCount, setPageCount] = useState(1)
+
 
 const initialDemoWelcomeModalData = {
   email: '',
@@ -12,6 +12,8 @@ const initialDemoWelcomeModalData = {
 const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
   const focusInputRef = useRef(null);
   const [formState, setFormState] = useState(initialDemoWelcomeModalData);
+  const [pageCount, setPageCount] = useState(1);
+  const [textSelection, setTextSelection] = useState('beginner')
 
   useEffect(() => {
     if (isOpen && focusInputRef.current) {
@@ -21,23 +23,28 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormState((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormState((prevFormData) => ({
+  //     ...prevFormData,
+  //     [name]: value,
+  //   }));
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(formState);
+    onSubmit(textSelection);
     setFormState(initialDemoWelcomeModalData);
   };
+
+  const onRadioChange = e => {
+    setTextSelection(e.target.value)
+  }
 
   return (
     <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose}>
       
+      {/* Modal Page 1 */}
       {pageCount === 1 ? 
         <div className="dialog-padding page-one">
             <div className="progress-div">
@@ -59,7 +66,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
         </div>
       : ""}
 
-      
+      {/* Modal Page 2 */}
       {pageCount === 2 ? 
         <div class="dialog-padding page-two">
           <div class="progress-div">
@@ -72,7 +79,13 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
           <form>
               <label for="beginnerRadioButton">
                   <div class="radio-div beginner-div">
-                      <input type="radio" value="beginner" name="text-choice" id="beginnerRadioButton" checked />
+                      <input 
+                        type="radio" 
+                        value="beginner" 
+                        id="beginnerRadioButton" 
+                        checked={textSelection === "beginner"} 
+                        onChange={onRadioChange}
+                      />
                       <h3>Beginner</h3>
                       <span>TOCFL 1-2</span>
                       <p>You can understand and use simple words and phrases.</p>
@@ -81,7 +94,13 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
 
               <label for="intermediateRadioButton">
                   <div class="radio-div intermediate-div">
-                      <input type="radio" value="intermediate" name="text-choice" id="intermediateRadioButton" />
+                      <input 
+                        type="radio" 
+                        value="intermediate" 
+                        id="intermediateRadioButton" 
+                        checked={textSelection === "intermediate"}
+                        onChange={onRadioChange} 
+                      />
                       <h3>Intermediate</h3>
                       <span>TOCFL 3-4</span>
                       <p>You can conduct basic communication in daily life, study, and work. You can manage most communication when traveling in China.</p>
@@ -90,7 +109,13 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
 
               <label for="advancedRadioButton">
                   <div class="radio-div advanced-div">
-                      <input type="radio" value="advanced" name="text-choice" id="advancedRadioButton" />
+                      <input 
+                        type="radio" 
+                        value="advanced" 
+                        id="advancedRadioButton" 
+                        checked={textSelection === "advanced"} 
+                        onChange={onRadioChange}
+                      />
                       <h3>Advanced</h3>
                       <span>TOCFL 5-6</span>
                       <p>You can read Chinese newspapers and magazines, watch Chinese films and TV shows, and can write and deliver a full speech.</p>
@@ -114,6 +139,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
         </div> 
       : ""}
       
+      {/* Modal Page 3 */}
       {pageCount === 3 ? 
         <div class="dialog-padding page-three">
           <div class="progress-div">
