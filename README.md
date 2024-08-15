@@ -1,4 +1,4 @@
-KnowNative React Multi Page Modal Template
+KnowNative React Welcome Modal
 
 LIVE Demo
 https://stackblitz.com/edit/stackblitz-starters-xudnqf?file=src%2FApp.js
