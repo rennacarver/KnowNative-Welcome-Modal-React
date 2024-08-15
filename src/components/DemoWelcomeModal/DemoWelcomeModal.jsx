@@ -6,7 +6,6 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
   const focusInputRef = useRef(null);
   const [pageCount, setPageCount] = useState(1);
   const [textSelection, setTextSelection] = useState('beginner')
-  const enableEsc = false;
 
   useEffect(() => {
     if (isOpen && focusInputRef.current) {
@@ -26,7 +25,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
   }
 
   return (
-    <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose} enableEsc={false}>
+    <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose} hasEscKey={false}>
 
     <div className="dialog-padding">
       {/* Modal Page 1 */}
@@ -54,7 +53,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
           <h1>Choose your level</h1>
           <p>How would you describe your proficiency in Mandarin Chinese?</p>
           <form>
-              <label for="beginnerRadioButton">
+              <label htmlFor="beginnerRadioButton">
                   <div 
                   className={`radio-div beginner-div 
                     ${textSelection === "beginner" ? "active-radio-div" : ""}`}
@@ -72,7 +71,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
                   </div>
               </label>
 
-              <label for="intermediateRadioButton">
+              <label htmlFor="intermediateRadioButton">
                   <div 
                     className={`radio-div intermediate-div 
                     ${textSelection === "intermediate" ? "active-radio-div" : ""}`}
@@ -90,7 +89,7 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
                   </div>
               </label>
 
-              <label for="advancedRadioButton">
+              <label htmlFor="advancedRadioButton">
                   <div 
                     className={`radio-div advanced-div 
                     ${textSelection === "advanced" ? "active-radio-div" : ""}`}

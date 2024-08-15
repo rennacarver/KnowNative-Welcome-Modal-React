@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Modal.css';
 
-const Modal = ({ isOpen, hasCloseBtn = true, onClose, children }) => {
+const Modal = ({ isOpen, hasCloseBtn = true, onClose, hasEscKey, children }) => {
   const [isModalOpen, setModalOpen] = useState(isOpen);
-  const modalRef = useRef(null);
+  const modalRef = useRef(null)
 
   const handleCloseModal = () => {
     if (onClose) {
@@ -13,7 +13,9 @@ const Modal = ({ isOpen, hasCloseBtn = true, onClose, children }) => {
   };
 
   const handleKeyDown = (event) => {
+    if (!hasEscKey) return;
     if (event.key === 'Escape') {
+      event.preventDefault()
       handleCloseModal();
     }
   };
@@ -35,7 +37,10 @@ const Modal = ({ isOpen, hasCloseBtn = true, onClose, children }) => {
   }, [isModalOpen]);
 
   return (
-    <dialog ref={modalRef} onKeyDown={handleKeyDown} className="modal">
+    <dialog ref={modalRef} 
+      onKeyDown={handleKeyDown} 
+      className="modal"
+    >
       {hasCloseBtn && (
         <button className="modal-close-btn" onClick={handleCloseModal}>
           Close
