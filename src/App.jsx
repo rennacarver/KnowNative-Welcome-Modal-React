@@ -5,14 +5,14 @@ import logo from './assets/KN.png';
 
 const App = () => {
   const [isDemoWelcomeModalOpen, setDemoWelcomeModalOpen] = useState(true);
-  const [newsletterFormData, setNewsletterFormData] = useState(null);
+  const [DemoWelcomeModalData, setDemoWelcomeModalData] = useState(null);
 
   const handleCloseDemoWelcomeModal = () => {
     setDemoWelcomeModalOpen(false);
   };
 
-  const handleFormSubmit = (data) => {
-    setNewsletterFormData(data);
+  const handleWelcomeModalSubmit = (data) => {
+    setDemoWelcomeModalData(data);
     handleCloseDemoWelcomeModal();
   };
 
@@ -20,16 +20,15 @@ const App = () => {
     <>
       <img src={logo} alt="KN app" height="600vh"></img>
 
-      {newsletterFormData && newsletterFormData.email && (
+      {DemoWelcomeModalData && (
         <div className="msg-box">
-          <b>{newsletterFormData.email}</b> requested a{' '}
-          <b>{newsletterFormData.digestType}</b> newsletter.
+          {DemoWelcomeModalData}
         </div>
       )}
 
       <DemoWelcomeModal
         isOpen={isDemoWelcomeModalOpen}
-        onSubmit={handleFormSubmit}
+        onSubmit={handleWelcomeModalSubmit}
         onClose={handleCloseDemoWelcomeModal}
       />
     </>

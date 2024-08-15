@@ -2,18 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import './DemoWelcomeModal.css';
 import Modal from '../Modal/Modal';
 
-
-
-const initialDemoWelcomeModalData = {
-  email: '',
-  digestType: 'weekly',
-};
-
 const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
   const focusInputRef = useRef(null);
-  const [formState, setFormState] = useState(initialDemoWelcomeModalData);
   const [pageCount, setPageCount] = useState(1);
   const [textSelection, setTextSelection] = useState('beginner')
+  const enableEsc = false;
 
   useEffect(() => {
     if (isOpen && focusInputRef.current) {
@@ -23,18 +16,9 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setFormState((prevFormData) => ({
-  //     ...prevFormData,
-  //     [name]: value,
-  //   }));
-  // };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(textSelection);
-    setFormState(initialDemoWelcomeModalData);
   };
 
   const onRadioChange = e => {
@@ -42,11 +26,12 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
   }
 
   return (
-    <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose}>
-      
+    <Modal hasCloseBtn={false} isOpen={isOpen} onClose={onClose} enableEsc={false}>
+
+    <div className="dialog-padding">
       {/* Modal Page 1 */}
       {pageCount === 1 ? 
-        <div className="dialog-padding page-one">
+        <div className="page-one">
             <div className="progress-div">
                 <div className="progress-dashes active"></div>
                 <div className="progress-dashes inactive"></div>
@@ -55,30 +40,25 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
             <h1>Welcome to KnowNative!</h1>
             <p>KnowNative can help you read and study texts written in Mandarin Chinese.</p>
             <p>We'll help you choose a <span className="bolded">sample text</span> for this demo based on your language level. In the full version of KnowNative, you can use any text you like.</p>
-            <div className="button-div">
-                <button 
-                className="dialog-two next" 
-                onClick={() => setPageCount((pageCount) => pageCount + 1)}
-                >
-                  Next {pageCount}
-                </button>
-            </div>
         </div>
       : ""}
 
       {/* Modal Page 2 */}
       {pageCount === 2 ? 
-        <div class="dialog-padding page-two">
-          <div class="progress-div">
-              <div class="progress-dashes active"></div>
-              <div class="progress-dashes active"></div>
-              <div class="progress-dashes inactive"></div>
+        <div className="page-two">
+          <div className="progress-div">
+              <div className="progress-dashes active"></div>
+              <div className="progress-dashes active"></div>
+              <div className="progress-dashes inactive"></div>
           </div>
           <h1>Choose your level</h1>
           <p>How would you describe your proficiency in Mandarin Chinese?</p>
           <form>
               <label for="beginnerRadioButton">
-                  <div class="radio-div beginner-div">
+                  <div 
+                  className={`radio-div beginner-div 
+                    ${textSelection === "beginner" ? "active-radio-div" : ""}`}
+                  >
                       <input 
                         type="radio" 
                         value="beginner" 
@@ -93,7 +73,10 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
               </label>
 
               <label for="intermediateRadioButton">
-                  <div class="radio-div intermediate-div">
+                  <div 
+                    className={`radio-div intermediate-div 
+                    ${textSelection === "intermediate" ? "active-radio-div" : ""}`}
+                  >
                       <input 
                         type="radio" 
                         value="intermediate" 
@@ -108,7 +91,10 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
               </label>
 
               <label for="advancedRadioButton">
-                  <div class="radio-div advanced-div">
+                  <div 
+                    className={`radio-div advanced-div 
+                    ${textSelection === "advanced" ? "active-radio-div" : ""}`}
+                  >
                       <input 
                         type="radio" 
                         value="advanced" 
@@ -122,45 +108,49 @@ const DemoWelcomeModal = ({ onSubmit, isOpen, onClose }) => {
                   </div>
               </label>
           </form>
-          <div class="button-div">
-            <button 
-              className="dialog-two next" 
-              onClick={() => setPageCount((pageCount) => pageCount + 1)}
-              >
-                Next {pageCount}
-            </button>
-            <button 
-              className="dialog-two back" 
-              onClick={() => setPageCount((pageCount) => pageCount - 1)}
-              >
-                Back {pageCount}
-            </button>
-          </div>
         </div> 
       : ""}
       
       {/* Modal Page 3 */}
       {pageCount === 3 ? 
-        <div class="dialog-padding page-three">
-          <div class="progress-div">
-              <div class="progress-dashes active"></div>
-              <div class="progress-dashes active"></div>
-              <div class="progress-dashes active"></div>
+        <div className="page-three">
+          <div className="progress-div">
+              <div className="progress-dashes active"></div>
+              <div className="progress-dashes active"></div>
+              <div className="progress-dashes active"></div>
           </div>
           <h1>Great!</h1>
-          <p>Let's get started with a <span id="textChoice" class="bolded">beginner</span>-level text.</p>
+          <p>Let's get started with a <span id="textChoice" className="bolded">{textSelection}</span>-level text.</p>
           <p>You can choose a different text at any time using the Library icon in the left toolbar.</p>
-          <div class="button-div">
-              <button class="exit next" onClick={handleSubmit}>Let's go!</button>
-              <button 
-              className="dialog-three back" 
-              onClick={() => setPageCount((pageCount) => pageCount - 1)}
-              >
-                Back {pageCount}
-            </button>
-          </div>
         </div>
       : ""}
+
+      {/* Conditionally render buttons depending on pageState */}
+      <div className="button-div">
+        {pageCount === 3 ?  
+          <button className="exit next" onClick={handleSubmit}>Let's go!</button>
+        : ""}
+
+        {pageCount !== 3 ? 
+          <button 
+              className="dialog-two next" 
+              onClick={() => setPageCount((pageCount) => pageCount + 1)}
+              >
+                Next
+          </button>
+        : ""}
+
+        {pageCount !==1 ? 
+          <button 
+          className="dialog-three back" 
+          onClick={() => setPageCount((pageCount) => pageCount - 1)}
+          >
+            Back
+        </button>
+        : ""}
+      </div>
+
+    </div> 
     </Modal>
   );
 };
