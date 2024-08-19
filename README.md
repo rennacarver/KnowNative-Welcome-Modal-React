@@ -1,4 +1,4 @@
-#KnowNative React Welcome Modal
+# KnowNative React Welcome Modal
 
 ![Knownative welcome modal large](https://github.com/user-attachments/assets/ac2c68ee-1226-403e-9597-c7f88df975b6)
 
